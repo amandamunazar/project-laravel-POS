@@ -3,8 +3,9 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash; // Import Hash facade
 
 class DatabaseSeeder extends Seeder
 {
@@ -13,11 +14,24 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+        // Menambahkan data pengguna dengan password terenkripsi menggunakan bcrypt
+        DB::table('users')->insert([
+            [
+                'id' => '1',
+                'name' => 'super user',
+                'email' => 'qwerty@gmail.com',
+                'password' => Hash::make('user'), // Menggunakan Hash::make untuk bcrypt
+                'role' => 'SU',
+                
+            ],
+            [
+                'id' => '2',
+                'name' => 'admin',
+                'email' => 'admin@gmail.com',
+                'password' => Hash::make('admin'), // Menggunakan Hash::make untuk bcrypt
+                'role' => 'AD',
+                
+            ]
         ]);
     }
 }
