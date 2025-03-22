@@ -50,15 +50,13 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                         aria-label="Close"></button>
                                 </div>
-                                <form action="" method="POST">
+                                <form action="{{ route('kategori.update', $kategori->id) }}" method="POST">
                                     @csrf
                                     @method('PUT')
                                     <div class="modal-body">
-                                        <div class="mb-3">
-                                            <label class="form-label">Nama Kategori</label>
-                                            <input type="text" class="form-control" name="nama"
-                                                value="{{ $kategori->nama }}" required>
-                                        </div>
+                                        <label class="form-label">Nama Kategori</label>
+                                        <input type="text" class="form-control" name="name"
+                                            value="{{ $kategori->name }}" required>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary"
@@ -66,6 +64,7 @@
                                         <button type="submit" class="btn btn-success">Simpan Perubahan</button>
                                     </div>
                                 </form>
+
                             </div>
                         </div>
                     </div>

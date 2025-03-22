@@ -6,32 +6,44 @@ use App\Models\Order;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
 use App\Models\OrderItem;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Menampilkan halaman create transaksi.
      */
     public function index()
     {
-        return view('transaksi.create');
+        $orders = Order::all(); // Ambil semua order dari database
+        return view('transaksi.create', compact('orders'));
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Menampilkan halaman laporan transaksi.
      */
-    public function create()
+    public function index1()
     {
-        //
+        $orders = Order::all();
+        return view('LaporanTransaksi.index', compact('orders'));
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Menyimpan transaksi baru ke database.
      */
     public function store(Request $request)
     {
+        // Cek apakah user sudah login
+        if (!Auth::check()) {
+            return redirect()->back()->with('error', 'Anda harus login terlebih dahulu!');
+        }
+
+        $user_id = Auth::id(); // Ambil ID user yang login
+
         $data = $request->validate([
             'barang' => 'required|array',
             'barang.*.product_id' => 'nullable|integer',
@@ -39,12 +51,12 @@ class OrderController extends Controller
             'barang.*.quantity' => 'required|integer|min:1',
             'barang.*.price' => 'required|numeric|min:0',
         ]);
-        $user = Auth::user();
-        $user_id = $user->id;        // Buat Order baru
+
+        // Buat Order baru
         $order = Order::create([
-            'user_id' => $user_id,
+            'user_id' => $user_id, // Pastikan ID user tidak null
             'status' => 'pending',
-            'total_price' => 0, // Awalnya 0, nanti di-update
+            'total_price' => 0,
         ]);
 
         $total_price = 0;
@@ -54,7 +66,7 @@ class OrderController extends Controller
             $total_price += $total_harga;
 
             OrderItem::create([
-                'order_id' => $order->id, // Hubungkan dengan Order
+                'order_id' => $order->id,
                 'product_id' => $barang['product_id'] ?? null,
                 'nama' => $barang['nama'],
                 'quantity' => $barang['quantity'],
@@ -63,15 +75,14 @@ class OrderController extends Controller
             ]);
         }
 
-        // Update total_price di Order setelah semua item ditambahkan
+        // Update total_price setelah semua item ditambahkan
         $order->update(['total_price' => $total_price]);
 
         return redirect()->back()->with('success', 'Transaksi berhasil disimpan!');
     }
 
-
     /**
-     * Display the specified resource.
+     * Menampilkan detail transaksi tertentu.
      */
     public function show(Order $order)
     {
@@ -79,7 +90,7 @@ class OrderController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Menampilkan form edit transaksi tertentu.
      */
     public function edit(Order $order)
     {
@@ -87,7 +98,7 @@ class OrderController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update transaksi tertentu.
      */
     public function update(UpdateOrderRequest $request, Order $order)
     {
@@ -95,10 +106,35 @@ class OrderController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Hapus transaksi tertentu.
      */
     public function destroy(Order $order)
     {
         //
+    }
+
+    /**
+     * Mengambil data untuk laporan dalam bentuk chart.
+     */
+    public function getChartData()
+    {
+        $data = Order::select(
+            DB::raw('DATE(created_at) as date'),
+            DB::raw('COUNT(id) as jumlah_transaksi'),
+            DB::raw('SUM(total_price) as total_pendapatan')
+        )
+            ->groupBy('date')
+            ->orderBy('date', 'ASC')
+            ->get();
+
+        return response()->json($data);
+    }
+
+    public function exportPdf()
+    {
+        $orders = Order::all(); // Ambil semua data order
+
+        $pdf = Pdf::loadView('LaporanTransaksi.pdf', compact('orders')); // Gunakan blade khusus untuk PDF
+        return $pdf->download('laporan_transaksi.pdf'); // Download PDF
     }
 }

@@ -20,6 +20,10 @@
             <label class="form-label">Nama Produk</label>
             <input type="text" class="form-control" name="nama" required>
         </div>
+                <div class="mb-3">
+            <label class="form-label">Kode</label>
+            <input type="text" class="form-control" name="kode" required>
+        </div>
         <div class="mb-3">
             <label class="form-label">Kategori</label>
             <select class="form-control" name="kategori_id" required>

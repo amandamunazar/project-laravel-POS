@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use App\Models\Produk;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash; // Import Hash facade
 
@@ -14,6 +15,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+
+        // $this->call([KategoriSeede::class]);
+        // Produk::factory()->count(50)->create();
+        // $this->call([
+        //     KategoriSeeder::class,
+        // ]);
         // Menambahkan data pengguna dengan password terenkripsi menggunakan bcrypt
         DB::table('users')->insert([
             [

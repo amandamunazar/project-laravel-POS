@@ -27,7 +27,9 @@ class ProdukController extends Controller
     public function create()
     {
         $kategoris = Kategori::all(); // Ambil semua kategori
-        return view('produk.create', compact('kategoris'));
+        $kodeProduk = Produk::generateKodeProduk(); // Generate kode produk otomatis
+        return view('produk.create', compact('kategoris', 'kodeProduk'));
+
     }
 
     /**
@@ -36,14 +38,15 @@ class ProdukController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'kode' => 'required|integer',
+            'kode' => 'required|string',
             'nama' => 'required|string|max:255',
             'kategori_id' => 'required|exists:kategori,id',
             'stok' => 'required|integer|min:0',
-            'harga' => 'required|numeric|min:0',
+            'harga_jual' => 'required|numeric',
             'deskripsi' => 'nullable|string',
             'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
+        
 
         $gambarPath = null;
         if ($request->hasFile('gambar')) {
@@ -55,7 +58,8 @@ class ProdukController extends Controller
             'nama' => $request->nama,
             'kategori_id' => $request->kategori_id,
             'stok' => $request->stok,
-            'harga' => $request->harga,
+
+            'harga_jual' => $request->harga_jual,
             'deskripsi' => $request->deskripsi,
             'gambar' => $gambarPath,
         ]);
@@ -131,8 +135,11 @@ class ProdukController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Produk $produk)
+    public function destroy($id)
     {
-        //
+        $produk = Produk::findOrFail($id);
+        $produk->delete();
+
+        return redirect()->route('produk.index')->with('success', 'Produk berhasil dihapus!');
     }
 }

@@ -5,8 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Kategori;
 use App\Http\Requests\StoreKategoriRequest;
 use App\Http\Requests\UpdateKategoriRequest;
-use Illuminate\Http\Request as HttpRequest;
-use Illuminate\Support\Facades\Request;
+use Illuminate\Http\Request;
 
 class KategoriController extends Controller
 {
@@ -30,7 +29,7 @@ class KategoriController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(HttpRequest $request)
+    public function store(Request $request)
     {
         $request->validate([
             'name' => 'required|string',
@@ -65,19 +64,18 @@ class KategoriController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateKategoriRequest $request, Kategori $kategori)
+    public function update(Request $request, Kategori $kategori)
     {
-        // $request->validate([
-        //     'name' => 'required|string|max:255',
-        // ]);
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+        ]);
 
-        // $kategori = Kategori::findOrFail($kategori);
-        // $kategori->update([
-        //     'name' => $request->name,
-        // ]);
+        $kategori->update($validated);
 
-        // return redirect()->route('kategori.index')->with('success', 'Kategori berhasil diperbarui.');
+        return redirect()->route('kategori.index')->with('success', 'Kategori berhasil diperbarui.');
     }
+
+
 
     /**
      * Remove the specified resource from storage.

@@ -22,18 +22,18 @@ class PemasokController extends Controller
             'email' => 'required|email|unique:pemasok,email',
         ]);
 
-        Pemasok::create([
-            'nama' => $request->nama,
-            'alamat' => $request->alamat,
-            'no_telp' => $request->no_telp,
-            'email' => $request->email,
-        ]);
+        Pemasok::create($request->only(['nama', 'alamat', 'no_telp', 'email']));
+
         return redirect()->route('pemasok.index')->with('success', 'Pemasok berhasil ditambahkan!');
     }
 
     public function update(Request $request, $id)
     {
-        $pemasok = Pemasok::findOrFail($id);
+        $pemasok = Pemasok::find($id);
+
+        if (!$pemasok) {
+            return redirect()->route('pemasok.index')->with('error', 'Pemasok tidak ditemukan!');
+        }
 
         $request->validate([
             'nama' => 'required|string|max:255',
@@ -42,13 +42,20 @@ class PemasokController extends Controller
             'email' => 'required|email|unique:pemasok,email,' . $id,
         ]);
 
-        $pemasok->update($request->all());
+        $pemasok->update($request->only(['nama', 'alamat', 'no_telp', 'email']));
+
         return redirect()->route('pemasok.index')->with('success', 'Pemasok berhasil diperbarui!');
     }
 
     public function destroy($id)
     {
-        Pemasok::findOrFail($id)->delete();
+        $pemasok = Pemasok::find($id);
+
+        if (!$pemasok) {
+            return redirect()->route('pemasok.index')->with('error', 'Pemasok tidak ditemukan!');
+        }
+
+        $pemasok->delete();
         return redirect()->route('pemasok.index')->with('success', 'Pemasok berhasil dihapus!');
     }
 }

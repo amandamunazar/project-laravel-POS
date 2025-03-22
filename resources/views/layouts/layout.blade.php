@@ -21,8 +21,14 @@
     <link href="{{ asset('asset') }}/css/sb-admin-2.min.css" rel="stylesheet">
 
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+    </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+
 
 </head>
 
@@ -37,9 +43,9 @@
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
                 <div class="sidebar-brand-icon rotate-n-15">
-                    <i class="fas fa-laugh-wink"></i>
+                 <i class="fas fa-globe"></i> <!-- Mirip planet umum --> 
                 </div>
-                <div class="sidebar-brand-text mx-3">PROJECT POS</div>
+                <div class="sidebar-brand-text mx-3">SATURNPOS</div>
             </a>
 
             <!-- Divider -->
@@ -47,7 +53,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="{{ route('home') }}">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>HOME</span></a>
             </li>
@@ -88,6 +94,8 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Custom Utilities:</h6>
                         <a class="collapse-item" href="{{ route('transaksi.create') }}">Penjualan</a>
+                        <a class="collapse-item" href="{{ route('pembelian') }}">Pembelian</a>
+                        {{-- <a class="collapse-item" href="{{ route('pembelian.index') }}">Pembelian</a> --}}
                     </div>
                 </div>
             </li>
@@ -103,9 +111,8 @@
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Custom Utilities:</h6>
-                        {{-- <a class="collapse-item" href="utilities-color.html">Laporan Daftar Barang</a>
-                        <a class="collapse-item" href="utilities-border.html">Laporan Pengembalian<br>Barang</a>
-                        <a class="collapse-item" href="utilities-animation.html">Laporan Status Barang</a> --}}
+                        <a class="collapse-item" href="{{ route('laporan.transaksi') }}">transaksi index</a>
+                        <a class="collapse-item" href="{{ route('laporan.index') }}">Laporan Pembelian</a>
                     </div>
                 </div>
             </li>
@@ -115,17 +122,46 @@
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsefour"
                     aria-expanded="true" aria-controls="collapseUtilities">
                     <i class="fas fa-fw fa-wrench"></i>
-                    <span>REFERENSI</span>
+                    <span>KATEGORI</span>
                 </a>
                 <div id="collapsefour" class="collapse" aria-labelledby="headingUtilities"
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Custom Utilities:</h6>
                         <a class="collapse-item" href="{{ route('kategori.index') }}">Kategori</a>
-                        <a class="collapse-item" href="utilities-border.html">Daftar Pengguna</a>
                     </div>
                 </div>
             </li>
+
+            <!-- Nav Item - Member (Dipisah) -->
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('members.index') }}">
+                    <i class="fas fa-fw fa-user"></i>
+                    <span>MEMBER</span>
+                </a>
+            </li>
+
+            <!-- Nav Item - Pengajuan -->
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('pengajuan.index') }}">
+                    <i class="fas fa-fw fa-user"></i>
+                    <span>PENGAJUAN BARANG</span>
+                </a>
+            </li>
+            {{-- <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsefive"
+                    aria-expanded="true" aria-controls="collapseUtilities">
+                    <i class="fas fa-fw fa-wrench"></i>
+                    <span>Pembelian</span>
+                </a>
+                <div id="collapsefive" class="collapse" aria-labelledby="headingUtilities"
+                    data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Custom Utilities:</h6>
+                        <a class="collapse-item" href="{{ route('pembelian') }}">Pembelian</a>
+                        <a class="collapse-item" href="utilities-border.html">Daftar Pengguna</a>
+                    </div>
+                </div>
+            </li> --}}
 
             <!-- Sidebar Toggler (Sidebar) -->
             <div class="text-center d-none d-md-inline mt-5">
@@ -149,7 +185,7 @@
                         <i class="fa fa-bars"></i>
                     </button>
 
-                    
+
 
                     {{-- <!-- Topbar Search -->
                     <form
@@ -217,7 +253,8 @@
                                     </div>
                                     <div>
                                         <div class="small text-gray-500">December 12, 2019</div>
-                                        <span class="font-weight-bold">A new monthly report is ready to download!</span>
+                                        <span class="font-weight-bold">A new monthly report is ready to
+                                            download!</span>
                                     </div>
                                 </a>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
@@ -242,7 +279,8 @@
                                         Spending Alert: We've noticed unusually high spending for your account.
                                     </div>
                                 </a>
-                                <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
+                                <a class="dropdown-item text-center small text-gray-500" href="#">Show All
+                                    Alerts</a>
                             </div>
                         </li>
 
@@ -262,8 +300,8 @@
                                 </h6>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="{{ asset('asset') }}/img/undraw_profile_1.svg"
-                                            alt="...">
+                                        <img class="rounded-circle"
+                                            src="{{ asset('asset') }}/img/undraw_profile_1.svg" alt="...">
                                         <div class="status-indicator bg-success"></div>
                                     </div>
                                     <div class="font-weight-bold">
@@ -274,8 +312,8 @@
                                 </a>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="{{ asset('asset') }}/img/undraw_profile_2.svg"
-                                            alt="...">
+                                        <img class="rounded-circle"
+                                            src="{{ asset('asset') }}/img/undraw_profile_2.svg" alt="...">
                                         <div class="status-indicator"></div>
                                     </div>
                                     <div>
@@ -286,20 +324,20 @@
                                 </a>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="img/undraw_profile_3.svg"
-                                            alt="...">
+                                        <img class="rounded-circle" src="img/undraw_profile_3.svg" alt="...">
                                         <div class="status-indicator bg-warning"></div>
                                     </div>
                                     <div>
-                                        <div class="text-truncate">Last month's report looks great, I am very happy with
+                                        <div class="text-truncate">Last month's report looks great, I am very happy
+                                            with
                                             the progress so far, keep up the good work!</div>
                                         <div class="small text-gray-500">Morgan Alvarez · 2d</div>
                                     </div>
                                 </a>
                                 <a class="dropdown-item d-flex align-items-center" href="#">
                                     <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle" src="https://source.unsplash.com/Mv9hjnEUHR4/60x60"
-                                            alt="...">
+                                        <img class="rounded-circle"
+                                            src="https://source.unsplash.com/Mv9hjnEUHR4/60x60" alt="...">
                                         <div class="status-indicator bg-success"></div>
                                     </div>
                                     <div>
@@ -308,7 +346,8 @@
                                         <div class="small text-gray-500">Chicken the Dog · 2w</div>
                                     </div>
                                 </a>
-                                <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
+                                <a class="dropdown-item text-center small text-gray-500" href="#">Read More
+                                    Messages</a>
                             </div>
                         </li>
 
@@ -319,7 +358,7 @@
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">
-                                    <h6>User</h6>
+                                    {{-- <h6>User</h6> --}}
                                 </span>
                                 <img class="img-profile rounded-circle"
                                     src="{{ asset('asset') }}/img/undraw_profile.svg">
@@ -340,7 +379,8 @@
                                     Activity Log
                                 </a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                <a class="dropdown-item" href="#" data-toggle="modal"
+                                    data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2"></i>
                                     <strong>Logout</strong>
                                 </a>
@@ -385,7 +425,8 @@
     </a>
 
     <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -394,7 +435,7 @@
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    
+
                     <!-- Formulir untuk Logout -->
                     <form id="logout-form" action="#" method="POST" style="display: inline;">
                         @csrf

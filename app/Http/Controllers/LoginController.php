@@ -26,7 +26,8 @@ class LoginController extends Controller
                 'email' => 'Username atau password salah.',
             ]);
         }
-        Auth::login($user);
+        
+       Auth::login($user);
         $request->session()->regenerate();
         return redirect()->route('home');
     }
