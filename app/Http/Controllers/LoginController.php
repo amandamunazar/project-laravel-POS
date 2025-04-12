@@ -11,26 +11,33 @@ class LoginController extends Controller
 {
     public function login(Request $request)
     {
-        // Validasi input user
         $request->validate([
             'email' => 'required|string',
             'password' => 'required|string',
         ]);
 
-        // Cari user berdasarkan email
         $user = User::where('email', $request->email)->first();
 
-        // Verifikasi apakah user ada dan cocokkan password
         if (!$user || !Hash::check($request->password, $user->password)) {
             return back()->withErrors([
                 'email' => 'Username atau password salah.',
             ]);
         }
-        
-       Auth::login($user);
+
+        Auth::login($user);
         $request->session()->regenerate();
-        return redirect()->route('home');
+
+        // Redirect sesuai role
+        if ($user->role === 'AD') {
+            return redirect()->route('dashboard.admin');
+        } elseif ($user->role === 'SU') {
+            return redirect()->route('dashboard.super'); // pastikan route ini ada
+        } else {
+            Auth::logout(); // optional, buat logout user yang role-nya gak dikenal
+            return redirect('/')->with('error', 'Role tidak dikenali.');
+        }
     }
+
 
     public function logout(Request $request)
     {
