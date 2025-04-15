@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('nama');
             $table->integer('stok')->default(0);
             $table->decimal('harga', 10, 2);
+            $table->decimal('harga_jual', 10, 2);
             $table->string('gambar')->nullable();
             $table->text('deskripsi')->nullable();
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));

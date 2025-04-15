@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Produk;
-use App\Http\Requests\StoreProdukRequest;
-use App\Http\Requests\UpdateProdukRequest;
 use App\Models\Kategori;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -29,7 +27,6 @@ class ProdukController extends Controller
         $kategoris = Kategori::all(); // Ambil semua kategori
         $kodeProduk = Produk::generateKodeProduk(); // Generate kode produk otomatis
         return view('produk.create', compact('kategoris', 'kodeProduk'));
-
     }
 
     /**
@@ -42,11 +39,12 @@ class ProdukController extends Controller
             'nama' => 'required|string|max:255',
             'kategori_id' => 'required|exists:kategori,id',
             'stok' => 'required|integer|min:0',
+            'harga' => 'required|numeric|min:0',
             'harga_jual' => 'required|numeric',
             'deskripsi' => 'nullable|string',
             'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
-        
+
 
         $gambarPath = null;
         if ($request->hasFile('gambar')) {
@@ -58,7 +56,7 @@ class ProdukController extends Controller
             'nama' => $request->nama,
             'kategori_id' => $request->kategori_id,
             'stok' => $request->stok,
-
+            'harga' => $request->harga,
             'harga_jual' => $request->harga_jual,
             'deskripsi' => $request->deskripsi,
             'gambar' => $gambarPath,
@@ -102,7 +100,7 @@ class ProdukController extends Controller
             'nama' => 'required|string|max:255',
             'kategori_id' => 'required|exists:kategori,id',
             'stok' => 'required|integer|min:0',
-            'harga' => 'required|numeric|min:0',
+            'harga_jual' => 'required|numeric|min:0',
             'deskripsi' => 'nullable|string',
             'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
@@ -125,7 +123,7 @@ class ProdukController extends Controller
             'nama' => $request->nama,
             'kategori_id' => $request->kategori_id,
             'stok' => $request->stok,
-            'harga' => $request->harga,
+            'harga_jual' => $request->harga_jual,
             'deskripsi' => $request->deskripsi,
         ]);
 

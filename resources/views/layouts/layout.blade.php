@@ -43,13 +43,69 @@
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
                 <div class="sidebar-brand-icon rotate-n-15">
-                 <i class="fas fa-globe"></i> <!-- Mirip planet umum --> 
+                    <i class="fas fa-globe"></i> <!-- Mirip planet umum -->
                 </div>
                 <div class="sidebar-brand-text mx-3">SATURNPOS</div>
             </a>
 
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
+
+            {{-- @if (auth()->user()->role === 'kasir')
+                <!-- Sidebar untuk kasir -->
+                <!-- PRODUK -->
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseone"
+                        aria-expanded="true" aria-controls="collapseTwo">
+                        <i class="fas fa-box"></i>
+                        <span>PRODUK</span>
+                    </a>
+                    <div id="collapseone" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <a class="collapse-item" href="{{ route('produk.index') }}">Produk</a>
+                        </div>
+                    </div>
+                </li>
+
+                <!-- TRANSAKSI -->
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsetwo"
+                        aria-expanded="true" aria-controls="collapseUtilities">
+                        <i class="fas fa-fw fa-wrench"></i>
+                        <span>TRANSAKSI</span>
+                    </a>
+                    <div id="collapsetwo" class="collapse" aria-labelledby="headingUtilities"
+                        data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <a class="collapse-item" href="{{ route('transaksi.create') }}">Penjualan</a>
+                        </div>
+                    </div>
+                </li>
+
+                <!-- KATEGORI -->
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsefour"
+                        aria-expanded="true" aria-controls="collapseUtilities">
+                        <i class="fas fa-fw fa-wrench"></i>
+                        <span>KATEGORI</span>
+                    </a>
+                    <div id="collapsefour" class="collapse" aria-labelledby="headingUtilities"
+                        data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <a class="collapse-item" href="{{ route('kategori.index') }}">Kategori</a>
+                        </div>
+                    </div>
+                </li>
+
+                <!-- MEMBER -->
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('members.index') }}">
+                        <i class="fas fa-fw fa-user"></i>
+                        <span>MEMBER</span>
+                    </a>
+                </li>
+            @endif --}}
+
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item">
@@ -169,7 +225,10 @@
             </div>
 
         </ul>
+
+
         <!-- End of Sidebar -->
+
 
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">

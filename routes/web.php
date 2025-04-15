@@ -10,6 +10,7 @@ use App\Http\Controllers\PemasokController;
 use App\Http\Controllers\PembelianController;
 use App\Http\Controllers\PengajuanBarangController;
 use App\Http\Controllers\ProdukController;
+use App\Http\Controllers\UserController;
 use App\Http\Middleware\RoleMiddleware;
 use Illuminate\Support\Facades\Route;
 
@@ -31,7 +32,12 @@ Route::get('home', [DashboardController::class, 'admin'])->name('dashboard.admin
     Route::get('kategori', [KategoriController::class, 'index'])->name('kategori.index');
     Route::post('kategori/create', [KategoriController::class, 'store'])->name('kategori.store');
     Route::put('/kategori/{kategori}', [KategoriController::class, 'update'])->name('kategori.update');
-    
+
+    Route::get('pengguna', [UserController::class, 'index'])->name('pengguna.index');
+    Route::post('/pengguna', [UserController::class, 'store'])->name('pengguna.store');
+    Route::put('/pengguna/{user}', [UserController::class, 'update'])->name('pengguna.update');
+    Route::delete('/pengguna/{user}', [UserController::class, 'destroy'])->name('pengguna.destroy');
+
     //route produk
     Route::get('produk', [ProdukController::class, 'index'])->name('produk.index');
     Route::post('produk/store', [ProdukController::class, 'store'])->name('produk.store');
